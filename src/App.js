@@ -1,16 +1,11 @@
-import react, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Greet from './components/Greet'
-import Code from './components/Code'
+import Header from './components/Header'
 
-function App() {
+function App(){
   return (
     <div className="App">
-      <Greet />
-      <Code/>
+      <Header />
     </div>
   );
 }
 
-export default App;
+export default App
