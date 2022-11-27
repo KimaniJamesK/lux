@@ -1,29 +1,41 @@
-import React, { useState } from 'react';
-import data from "./data.json";
+import React, {useState, useEffect} from 'react';
 import Header from "./components/Header";
-import ToDoList from "./components/ToDoList";
-import './App.css';
+import Form from "./components/Form";
+import TodosList from './components/TodosList';
+import "./App.css";
 
-function App() {
-const [ toDoList, setToDoList ] = useState(data);
-  const handleToggle = (id) => {
-    let mapped = toDoList.map(task => {
-      return task.id == id ? { ...task, complete: !task.complete } : { ...task};
-    });
-    setToDoList(mapped);
-  }
-  const handleFilter = () => {
-    let filtered = toDoList.filter(task => {
-      return !task.complete;
-    });
-    setToDoList(filtered);
-  }
-  return(
-    <div className="App">
-      <Header />
-      <ToDoList toDoList={toDoList}/>
+const App = () => {
+
+  const initialState = JSON.parse(localStorage.getItem("todos")) || [];
+  const [input, setInput] = useState("");
+  const [todos, setTodos] = 'useSate'(initialState);
+  const [editTodo,setEditTodo] = useState(null);
+
+  useEffect(() =>{
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
+
+  return (
+  <div className='container'>
+    <div className='app-wrapper'>
+      <div>
+        <Header />
+      </div>
+      <div>
+        <Form input={input}
+        setInput={setInput}
+        todos={todos}
+        setTodos={setTodos}
+        editTodo={editTodo}
+        setEditTodo={setEditTodo}
+        />
+      </div>
+      <div>
+        <TodosList todos={todos} setTodos={setTodos} setEditTodo={setEditTodo} />
+      </div>
     </div>
-  );
+
+  </div>);
 }
 
 export default App;
